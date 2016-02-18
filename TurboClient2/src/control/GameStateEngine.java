@@ -1,5 +1,6 @@
 package control;
 
+import java.awt.event.KeyEvent;
 import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -9,6 +10,8 @@ import connection.IKeyPressListener;
 import dto.ConnectionState;
 import dto.GameState;
 import dto.KeyPressData;
+import gui.Gui;
+import gui.interfaces.IGui;
 
 public class GameStateEngine implements IGameStateEngine{
 
@@ -17,10 +20,11 @@ public class GameStateEngine implements IGameStateEngine{
 	private long lastSimTime;
 	private volatile LinkedList<IKeyPressListener> keyPressListeners = new LinkedList<>();
 	private final long SIMSPEED = 20;
+	private IGui gui = new Gui(this);
 
 	@Override
 	public void run() {
-		pingTest();
+		//pingTest();
 		lastSimTime = System.currentTimeMillis();
 		//Start simulation
 		new Timer().scheduleAtFixedRate(new TimerTask() {			
@@ -57,8 +61,9 @@ public class GameStateEngine implements IGameStateEngine{
 	@Override
 	public void receiveGameState(GameState state) {
 		this.gameState=state;
+		gui.drawGameState(state);
 		//Force update of gameEngine
-		System.out.println("GameStateEngine - New gameStaet received - correcting state!");
+		System.out.println("GameStateEngine - New gameState received - correcting state!");
 		gameSimulationLoop();		
 	}
 	//---- End of Callbacks ---
@@ -101,7 +106,6 @@ public class GameStateEngine implements IGameStateEngine{
 
 			@Override
 			public void run() {
-				System.out.println("Hello from GameEngine");
 				for (IKeyPressListener iKeyPressListener : keyPressListeners) {
 					System.out.println("GameEngine - Sending keypresses to KeypressListener: " + iKeyPressListener);
 					iKeyPressListener.sendKeyPress(new KeyPressData());
@@ -109,6 +113,14 @@ public class GameStateEngine implements IGameStateEngine{
 
 			}
 		}, 0, 2300);
+	}
+	@Override
+	public void keyPressed(KeyEvent e) {
+		for (IKeyPressListener iKeyPressListener : keyPressListeners) {
+			System.out.println("GameEngine - Sending Keypresses to KeyPresListener: " + iKeyPressListener);
+			iKeyPressListener.sendKeyPress(new KeyPressData());
+		}
+		
 	}
 
 

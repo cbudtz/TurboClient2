@@ -2,6 +2,8 @@ package control;
 
 import connection.ConnectionHandler;
 import connection.IConnectionHandler;
+import gui.Gui;
+import gui.interfaces.IGui;
 
 public class ClientController {
 
