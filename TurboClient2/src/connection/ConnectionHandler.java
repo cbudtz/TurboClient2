@@ -18,7 +18,7 @@ public class ConnectionHandler implements IConnectionHandler {
 	private Socket socket;
 	private KeyPressSender sender;
 	private Thread senderThread;
-	private KeyPressReceiver receiver;
+	private GameStateReceiver receiver;
 	private Thread receiverThread;
 
 	public ConnectionHandler(String host, int port) {
@@ -49,7 +49,7 @@ public class ConnectionHandler implements IConnectionHandler {
 		 senderThread = new Thread(sender);
 		 senderThread.start();
 		 
-		 receiver = new KeyPressReceiver(socket, this);
+		 receiver = new GameStateReceiver(socket, this);
 		 receiverThread = new Thread(receiver);
 		 receiverThread.start();
 		//pingTest();

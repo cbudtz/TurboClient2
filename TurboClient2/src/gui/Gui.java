@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 
 import control.IGameStateEngine;
 import dto.GameState;
+import dto.GameState.PlayerData;
 import gui.interfaces.IGui;
 
 public class Gui implements IGui {
@@ -52,7 +53,8 @@ public class Gui implements IGui {
 
 	@Override
 	public void drawGameState(GameState gameState) {
-		label.setText(gameState.toString());
+		for (PlayerData p : gameState.getPlayers().values())
+		label.setText(String.valueOf(p.health));
 		panel.repaint();
 
 	}

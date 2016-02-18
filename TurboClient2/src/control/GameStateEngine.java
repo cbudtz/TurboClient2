@@ -10,6 +10,7 @@ import connection.IKeyPressListener;
 import dto.ConnectionState;
 import dto.GameState;
 import dto.KeyPressData;
+import dto.GameState.PlayerData;
 import gui.Gui;
 import gui.interfaces.IGui;
 
@@ -62,6 +63,9 @@ public class GameStateEngine implements IGameStateEngine{
 	public void receiveGameState(GameState state) {
 		this.gameState=state;
 		gui.drawGameState(state);
+		for (PlayerData p : state.getPlayers().values()){
+			System.out.println(p.health);
+		}
 		//Force update of gameEngine
 		System.out.println("GameStateEngine - New gameState received - correcting state!");
 		gameSimulationLoop();		
