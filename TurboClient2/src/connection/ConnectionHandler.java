@@ -60,7 +60,7 @@ public class ConnectionHandler implements IConnectionHandler {
 
 	@Override
 	public void sendKeyPress(KeyPressData keyPressData) {
-		System.out.println("ConnectionHandler - Sending Keypress");
+		System.out.println("ConnectionHandler - Sending Keypress Time: " + System.currentTimeMillis());
 		if (sender !=null)sender.sendKeyPress(keyPressData);
 
 	}
@@ -87,7 +87,7 @@ public class ConnectionHandler implements IConnectionHandler {
 	}
 
 	public void receiveGameState(GameState gameState) {
-		log("Received gameState" + gameState);
+		log("Received gameState" + gameState + " Time: " + System.currentTimeMillis());
 		for (IConnectionListener iConnectionListener : connectionListeners) {
 			iConnectionListener.receiveGameState(gameState);
 		}
