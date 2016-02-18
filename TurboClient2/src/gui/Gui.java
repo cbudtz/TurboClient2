@@ -13,6 +13,35 @@ import dto.GameState.PlayerData;
 import gui.interfaces.IGui;
 
 public class Gui implements IGui {
+	private final class TurboKeyListener implements KeyListener {
+		private IGameStateEngine engine;
+
+		public TurboKeyListener(IGameStateEngine engine) {
+			this.engine = engine;
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			System.out.println("Key Pressed!");
+			engine.keyPressed(e);
+			
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			System.out.println("Key Pressed!");
+			engine.keyPressed(e);
+			
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			System.out.println("Key Pressed!");
+			engine.keyPressed(e);
+			
+		}
+	}
+
 	JFrame frame = new JFrame();
 	private JPanel panel;
 	private JLabel label;
@@ -26,29 +55,7 @@ public class Gui implements IGui {
 		frame.add(panel);
 		panel.add(label);
 		frame.setVisible(true);
-		frame.addKeyListener(new KeyListener() {
-			
-			@Override
-			public void keyTyped(KeyEvent e) {
-				System.out.println("Key Pressed!");
-				engine.keyPressed(e);
-				
-			}
-			
-			@Override
-			public void keyReleased(KeyEvent e) {
-				System.out.println("Key Pressed!");
-				engine.keyPressed(e);
-				
-			}
-			
-			@Override
-			public void keyPressed(KeyEvent e) {
-				System.out.println("Key Pressed!");
-				engine.keyPressed(e);
-				
-			}
-		});
+		frame.addKeyListener(new TurboKeyListener(engine));
 	}
 
 	@Override
